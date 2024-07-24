@@ -2,7 +2,9 @@ package com.ohrim;
 
 import com.ohrim.actions.MapInitializer;
 import com.ohrim.actions.MoveAction;
+import lombok.Getter;
 
+@Getter
 public class Simulation {
 
 
