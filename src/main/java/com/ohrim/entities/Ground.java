@@ -1,4 +1,4 @@
 package com.ohrim.entities;
 
-public class Ground {
+public class Ground extends Entity{
 }

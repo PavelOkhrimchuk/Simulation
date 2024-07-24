@@ -1,4 +1,4 @@
 package com.ohrim.entities;
 
-public class Tree {
+public class Tree extends Entity{
 }

@@ -1,4 +1,4 @@
 package com.ohrim.entities;
 
-public class Rock {
+public class Rock extends Entity{
 }
