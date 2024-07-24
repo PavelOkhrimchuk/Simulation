@@ -1,4 +1,5 @@
 package com.ohrim.actions;
 
-public class Action {
+public abstract class Action {
+    public abstract void execute();
 }
