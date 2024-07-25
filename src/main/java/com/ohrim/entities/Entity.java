@@ -5,14 +5,12 @@ import com.ohrim.Coordinates;
 import lombok.Getter;
 import lombok.Setter;
 
-@Setter
 @Getter
+@Setter
+
 public abstract class Entity {
 
-     Coordinates coordinates = new Coordinates();
-
-
-
+     protected Coordinates coordinates = new Coordinates();
 
 
 }
