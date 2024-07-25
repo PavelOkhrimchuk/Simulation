@@ -3,8 +3,6 @@ package com.ohrim.entities.creatures;
 import com.ohrim.BreadthFirstSearch;
 import com.ohrim.Coordinates;
 import com.ohrim.constants.EmojiConstants;
-import com.ohrim.entities.Entity;
-import com.ohrim.entities.Ground;
 
 import java.util.List;
 
@@ -12,8 +10,8 @@ import static com.ohrim.AppRunner.simulation;
 
 public class Predator extends Creature {
 
-    int attack = 2;
-    BreadthFirstSearch breadthFirstSearch;
+    int attack = 5;
+    private BreadthFirstSearch breadthFirstSearch;
 
     @Override
     public void makeMove() {
@@ -25,42 +23,30 @@ public class Predator extends Creature {
         } else {
             moveTowardsHerbivore(pathToHerbivore);
         }
-
     }
 
-
-
-
-
     private void moveTowardsHerbivore(List<Coordinates> pathToHerbivore) {
+        Coordinates currentCoordinates = this.getCoordinates();
+        Coordinates newCoordinates = pathToHerbivore.get(0);
 
-        Entity[][] map = simulation.getMap().getField();
-        map[coordinates.getX()][coordinates.getY()] = new Ground(new Coordinates(coordinates.getX(), coordinates.getY()));
-
-        Coordinates coordinatesToMove = pathToHerbivore.get(0);
-
-        if (map[coordinatesToMove.getX()][coordinatesToMove.getY()] instanceof Creature) {
-            coordinatesToMove = coordinates;
+        if (simulation.getMap().getEntity(newCoordinates) instanceof Creature) {
+            newCoordinates = currentCoordinates;
         }
 
-        this.setCoordinates(coordinatesToMove);
-        simulation.getMap().addEntity(this);
+        simulation.getMap().moveEntity(currentCoordinates, newCoordinates);
+        this.setCoordinates(newCoordinates);
     }
 
     private void attackHerbivore(List<Coordinates> pathToHerbivore) {
         Coordinates coordinatesOfHerbivore = pathToHerbivore.get(0);
-        Entity[][] map = simulation.getMap().getField();
-        Herbivore herbivore = (Herbivore) map[coordinatesOfHerbivore.getX()][coordinatesOfHerbivore.getY()];
+        Herbivore herbivore = (Herbivore) simulation.getMap().getEntity(coordinatesOfHerbivore);
         int herbivoreHp = herbivore.getHp();
         herbivore.setHp(herbivoreHp - attack);
 
         if (herbivore.getHp() <= 0) {
-            map[coordinatesOfHerbivore.getX()][coordinatesOfHerbivore.getY()] = new Ground(coordinatesOfHerbivore);
+            simulation.getMap().removeEntity(coordinatesOfHerbivore);
         }
-
-
     }
-
 
     @Override
     public String toString() {

@@ -3,9 +3,7 @@ package com.ohrim.entities.creatures;
 import com.ohrim.BreadthFirstSearch;
 import com.ohrim.Coordinates;
 import com.ohrim.constants.EmojiConstants;
-import com.ohrim.entities.Entity;
 import com.ohrim.entities.Grass;
-import com.ohrim.entities.Ground;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,12 +16,6 @@ import static com.ohrim.AppRunner.simulation;
 public class Herbivore extends Creature {
     private BreadthFirstSearch breadthFirstSearch;
 
-    public static void consumeGrass (List<Coordinates> pathToGrass) {
-        Coordinates grassCoordinates = pathToGrass.get(0);
-        Entity[][] field = simulation.getMap().getField();
-        field[grassCoordinates.getX()][grassCoordinates.getY()] = new Ground(grassCoordinates);
-    }
-
 
 
     @Override
@@ -31,28 +23,28 @@ public class Herbivore extends Creature {
         breadthFirstSearch = new BreadthFirstSearch();
         List<Coordinates> pathToGrass = breadthFirstSearch.findClosestObjectCoordinates(this.getCoordinates(), new Grass());
 
-        if(pathToGrass.size() == 1) {
+        if (pathToGrass.size() == 1) {
             consumeGrass(pathToGrass);
-        }
-        else {
+        } else {
             moveTowardsGrass(pathToGrass);
         }
+    }
 
-
+    private void consumeGrass(List<Coordinates> pathToGrass) {
+        Coordinates coordinatesOfGrass = pathToGrass.get(0);
+        simulation.getMap().removeEntity(coordinatesOfGrass);
     }
 
     private void moveTowardsGrass(List<Coordinates> pathToGrass) {
-        Entity[][] map = simulation.getMap().getField();
-        map[coordinates.getX()][coordinates.getY()] = new Ground(new Coordinates(coordinates.getX(), coordinates.getY()));
+        Coordinates currentCoordinates = this.getCoordinates();
+        Coordinates newCoordinates = pathToGrass.get(0);
 
-        Coordinates coordinatesToMove = pathToGrass.get(0);
-
-        if (map[coordinatesToMove.getX()][coordinatesToMove.getY()] instanceof Creature) {
-            coordinatesToMove = coordinates;
+        if (simulation.getMap().getEntity(newCoordinates) instanceof Creature) {
+            newCoordinates = currentCoordinates;
         }
 
-        this.setCoordinates(coordinatesToMove);
-        simulation.getMap().addEntity(this);
+        simulation.getMap().moveEntity(currentCoordinates, newCoordinates);
+        this.setCoordinates(newCoordinates);
     }
 
     @Override

@@ -14,9 +14,6 @@ public class MapInitializer extends Action {
     private Map map;
 
     public Map initializeMap() {
-
-
-
         map = new Map();
 
         HashMap<Integer, Integer> pool = createEntityDistribution(map);
@@ -25,42 +22,33 @@ public class MapInitializer extends Action {
             int amountOfEntity = pool.get(i);
 
             for (int j = 0; j < amountOfEntity; j++) {
+                Entity entity;
                 if (i == 0) {
-                    Grass grass = new Grass();
-                    setRandomCoordinates(grass);
-                    map.addEntity(grass);
+                    entity = new Grass();
+                } else if (i == 1) {
+                    entity = new Herbivore();
+                } else if (i == 2) {
+                    entity = new Predator();
+                } else if (i == 3) {
+                    entity = new Tree();
+                } else if (i == 4) {
+                    entity = new Rock();
+                } else {
+                    continue;
                 }
-                if (i == 1) {
-                    Herbivore herbivore = new Herbivore();
-                    setRandomCoordinates(herbivore);
-                    map.addEntity(herbivore);
-                }
-                if (i == 2) {
-                    Predator predator = new Predator();
-                    setRandomCoordinates(predator);
-                    map.addEntity(predator);
-                }
-                if (i == 3) {
-                    Tree tree = new Tree();
-                    setRandomCoordinates(tree);
-                    map.addEntity(tree);
-                }
-                if (i == 4) {
-                    Rock rock = new Rock();
-                    setRandomCoordinates(rock);
-                    map.addEntity(rock);
-                }
+
+                setRandomCoordinates(entity);
+                map.placeEntity(entity, entity.getCoordinates());
             }
         }
 
-
-        for (int i = 0; i < map.getField().length; i++) {
-            for (int j = 0; j < map.getField()[i].length; j++) {
-                Entity entity = map.getField()[i][j];
-
-                if (entity == null) {
-                    Ground ground = new Ground(new Coordinates(i, j));
-                    map.addEntity(ground);
+        // Заполняем оставшиеся ячейки землей
+        for (int row = 0; row < map.getWidth(); row++) {
+            for (int col = 0; col < map.getHeight(); col++) {
+                Coordinates coordinates = new Coordinates(row, col);
+                if (map.isCellEmpty(coordinates)) {
+                    Ground ground = new Ground(coordinates);
+                    map.placeEntity(ground, coordinates);
                 }
             }
         }
@@ -68,11 +56,10 @@ public class MapInitializer extends Action {
         return map;
     }
 
-
     private HashMap<Integer, Integer> createEntityDistribution(Map map) {
         HashMap<Integer, Integer> pool = new HashMap<>();
-        int x = map.getField().length;
-        int y = map.getField()[0].length;
+        int x = map.getWidth();
+        int y = map.getHeight();
         int area = x * y;
 
         int amountOfGrass = area / 2;
@@ -93,13 +80,11 @@ public class MapInitializer extends Action {
         return pool;
     }
 
-
     private <T extends Entity> void setRandomCoordinates(T entity) {
-        int xMax = map.getField().length;
-        int yMax = map.getField()[0].length;
+        int xMax = map.getWidth();
+        int yMax = map.getHeight();
 
         Random random = new Random();
-
         int randomX = random.nextInt(xMax);
         int randomY = random.nextInt(yMax);
         Coordinates coordinates = new Coordinates(randomX, randomY);

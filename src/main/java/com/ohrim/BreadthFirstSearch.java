@@ -10,11 +10,11 @@ public class BreadthFirstSearch {
     private final List<Coordinates> queuedCoordinates = new ArrayList<>();
     private final List<Coordinates> exploredCoordinates = new ArrayList<>();
     private final HashMap<Coordinates, Coordinates> childParentMap = new HashMap<>();
-    private Entity[][] field;
+    private Map map;
     private Entity targetEntity;
 
     public List<Coordinates> findClosestObjectCoordinates(Coordinates currentCoordinates, Entity targetEntity) {
-        this.field = simulation.getMap().getField();
+        this.map = simulation.getMap();
         this.targetEntity = targetEntity;
 
         queuedCoordinates.add(currentCoordinates);
@@ -31,8 +31,8 @@ public class BreadthFirstSearch {
     private Optional<Coordinates> exploreQueuedCoordinates() {
         for (int i = 0; i < queuedCoordinates.size(); i++) {
             Coordinates coordinates = queuedCoordinates.get(i);
-            Entity entity = field[coordinates.getX()][coordinates.getY()];
-            if (entity.getClass().equals(targetEntity.getClass())) {
+            Entity entity = map.getEntity(coordinates);
+            if (entity != null && entity.getClass().equals(targetEntity.getClass())) {
                 return Optional.of(coordinates);
             }
             exploredCoordinates.add(coordinates);
@@ -42,9 +42,7 @@ public class BreadthFirstSearch {
         enqueueNeighbors();
 
         return Optional.empty();
-
     }
-
 
     private void enqueueNeighbors() {
         for (Coordinates coordinates : exploredCoordinates) {
@@ -55,28 +53,24 @@ public class BreadthFirstSearch {
     private void enqueueNeighbors(Coordinates coordinates) {
 
         int startX = Math.max(coordinates.getX() - 1, 0);
-        int endX = Math.min(coordinates.getX() + 1, field.length - 1);
+        int endX = Math.min(coordinates.getX() + 1, map.getWidth() - 1);
         int startY = Math.max(coordinates.getY() - 1, 0);
-        int endY = Math.min(coordinates.getY() + 1, field[0].length - 1);
-
+        int endY = Math.min(coordinates.getY() + 1, map.getHeight() - 1);
 
         for (int x = startX; x <= endX; x++) {
             for (int y = startY; y <= endY; y++) {
                 Coordinates neighbor = new Coordinates(x, y);
-                Entity entity = field[neighbor.getX()][neighbor.getY()];
+                Entity entity = map.getEntity(neighbor);
 
                 if (!queuedCoordinates.contains(neighbor)
                         && !exploredCoordinates.contains(neighbor)
-                        && !(entity instanceof StaticObject)) {
+                        && (entity == null || !(entity instanceof StaticObject))) {
                     childParentMap.put(neighbor, coordinates);
                     queuedCoordinates.add(neighbor);
                 }
             }
         }
-
-
     }
-
 
     private List<Coordinates> findPathToTarget(Coordinates targetCoordinates) {
 
@@ -89,7 +83,6 @@ public class BreadthFirstSearch {
 
         Collections.reverse(path);
         return path;
-
     }
-
 }
+

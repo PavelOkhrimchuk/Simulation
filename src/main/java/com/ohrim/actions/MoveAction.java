@@ -1,32 +1,21 @@
 package com.ohrim.actions;
 
+import com.ohrim.Coordinates;
 import com.ohrim.Map;
-import com.ohrim.Renderer;
-import com.ohrim.entities.Entity;
 import com.ohrim.entities.creatures.Creature;
-
-import static com.ohrim.AppRunner.simulation;
 
 public class MoveAction extends Action{
 
 
-    public void  executeCreatureMoves(Map mapObject) {
-        Entity[][] map = mapObject.getField();
-
-        for (Entity[] entities : map) {
-            for (Entity entity : entities) {
-                if (entity instanceof Creature creature) {
-                    creature.makeMove();
+    public void executeCreatureMoves(Map map) {
+        for (int row = 0; row < map.getHeight(); row++) {
+            for (int col = 0; col < map.getWidth(); col++) {
+                Coordinates coordinates = new Coordinates(row, col);
+                if (!map.isCellEmpty(coordinates) && map.getEntity(coordinates) instanceof Creature) {
+                    ((Creature) map.getEntity(coordinates)).makeMove();
                 }
             }
         }
-
-        mapObject.updateField();
-    }
-
-    public void renderMap(Map map) {
-        Renderer renderer = simulation.getRenderer();
-        renderer.render(map);
     }
 
 }
