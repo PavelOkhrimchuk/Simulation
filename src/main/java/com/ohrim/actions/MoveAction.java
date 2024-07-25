@@ -1,8 +1,11 @@
 package com.ohrim.actions;
 
 import com.ohrim.Map;
+import com.ohrim.Renderer;
 import com.ohrim.entities.Entity;
 import com.ohrim.entities.creatures.Creature;
+
+import static com.ohrim.AppRunner.simulation;
 
 public class MoveAction extends Action{
     @Override
@@ -23,7 +26,8 @@ public class MoveAction extends Action{
     }
 
     public void renderMap(Map map) {
-
+        Renderer renderer = simulation.getRenderer();
+        renderer.render(map);
     }
 }
 
