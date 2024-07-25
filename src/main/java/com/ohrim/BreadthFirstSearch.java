@@ -7,6 +7,7 @@ import com.ohrim.entities.Rock;
 import java.util.*;
 
 public class BreadthFirstSearch {
+
     private final Simulation simulation = AppRunner.simulation;
     private final List<Coordinates> queuedCoordinates = new ArrayList<>();
     private final List<Coordinates> exploredCoordinates = new ArrayList<>();
@@ -92,6 +93,5 @@ public class BreadthFirstSearch {
         return path;
 
     }
-
 
 }
