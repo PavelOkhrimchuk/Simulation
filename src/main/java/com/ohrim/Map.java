@@ -20,16 +20,17 @@ public class Map {
     }
 
     public Map() {
-        this(30, 30);
+        this(5, 5);
     }
+
+
+
+
 
     public void addEntity(Entity entity) {
         Coordinates coordinates = entity.getCoordinates();
-        if (isWithinBounds(coordinates) && field[coordinates.getX()][coordinates.getY()] == null) {
-            field[coordinates.getX()][coordinates.getY()] = entity;
-        } else {
-            System.out.println("Invalid position or cell already occupied");
-        }
+        field[coordinates.getX()][coordinates.getY()] = entity;
+
     }
 
     public void updateField() {
@@ -40,10 +41,6 @@ public class Map {
         }
     }
 
-    private boolean isWithinBounds(Coordinates coordinates) {
-        return coordinates.getX() >= 0 && coordinates.getX() < width
-                && coordinates.getY() >= 0 && coordinates.getY() < height;
-    }
 
 
 }

@@ -8,12 +8,9 @@ import com.ohrim.entities.creatures.Creature;
 import static com.ohrim.AppRunner.simulation;
 
 public class MoveAction extends Action{
-    @Override
-    public void execute() {
 
-    }
 
-    public void executeCreatureMoves(Map mapObject) {
+    public void  executeCreatureMoves(Map mapObject) {
         Entity[][] map = mapObject.getField();
 
         for (Entity[] entities : map) {
@@ -23,11 +20,14 @@ public class MoveAction extends Action{
                 }
             }
         }
+
+        mapObject.updateField();
     }
 
     public void renderMap(Map map) {
         Renderer renderer = simulation.getRenderer();
         renderer.render(map);
     }
+
 }
 

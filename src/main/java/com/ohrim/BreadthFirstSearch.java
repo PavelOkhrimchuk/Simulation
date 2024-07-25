@@ -1,8 +1,6 @@
 package com.ohrim;
 
 import com.ohrim.entities.Entity;
-import com.ohrim.entities.Grass;
-import com.ohrim.entities.Rock;
 
 import java.util.*;
 
@@ -69,7 +67,7 @@ public class BreadthFirstSearch {
 
                 if (!queuedCoordinates.contains(neighbor)
                         && !exploredCoordinates.contains(neighbor)
-                        && !(entity instanceof Rock || entity instanceof Grass)) {
+                        && !(entity instanceof StaticObject)) {
                     childParentMap.put(neighbor, coordinates);
                     queuedCoordinates.add(neighbor);
                 }

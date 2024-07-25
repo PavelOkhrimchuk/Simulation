@@ -13,38 +13,52 @@ public class MapInitializer extends Action {
 
     private Map map;
 
-    @Override
-    public void execute() {
-        initializeMap();
-
-    }
-
     public Map initializeMap() {
+
+
+
         map = new Map();
+
         HashMap<Integer, Integer> pool = createEntityDistribution(map);
 
         for (int i = 0; i < pool.size(); i++) {
             int amountOfEntity = pool.get(i);
 
             for (int j = 0; j < amountOfEntity; j++) {
-                Entity entity = null;
-                switch (i) {
-                    case 0 -> entity = new Grass();
-                    case 1 -> entity = new Herbivore();
-                    case 2 -> entity = new Predator();
-                    case 3 -> entity = new Tree();
-                    case 4 -> entity = new Rock();
+                if (i == 0) {
+                    Grass grass = new Grass();
+                    setRandomCoordinates(grass);
+                    map.addEntity(grass);
                 }
-                if (entity != null) {
-                    setRandomCoordinates(entity);
-                    map.addEntity(entity);
+                if (i == 1) {
+                    Herbivore herbivore = new Herbivore();
+                    setRandomCoordinates(herbivore);
+                    map.addEntity(herbivore);
+                }
+                if (i == 2) {
+                    Predator predator = new Predator();
+                    setRandomCoordinates(predator);
+                    map.addEntity(predator);
+                }
+                if (i == 3) {
+                    Tree tree = new Tree();
+                    setRandomCoordinates(tree);
+                    map.addEntity(tree);
+                }
+                if (i == 4) {
+                    Rock rock = new Rock();
+                    setRandomCoordinates(rock);
+                    map.addEntity(rock);
                 }
             }
         }
 
+
         for (int i = 0; i < map.getField().length; i++) {
             for (int j = 0; j < map.getField()[i].length; j++) {
-                if (map.getField()[i][j] == null) {
+                Entity entity = map.getField()[i][j];
+
+                if (entity == null) {
                     Ground ground = new Ground(new Coordinates(i, j));
                     map.addEntity(ground);
                 }
@@ -52,7 +66,6 @@ public class MapInitializer extends Action {
         }
 
         return map;
-
     }
 
 
@@ -78,10 +91,10 @@ public class MapInitializer extends Action {
         pool.put(4, amountOfRocks);
 
         return pool;
-
     }
 
-    private <T extends Entity> void setRandomCoordinates(Entity entity) {
+
+    private <T extends Entity> void setRandomCoordinates(T entity) {
         int xMax = map.getField().length;
         int yMax = map.getField()[0].length;
 
@@ -92,6 +105,5 @@ public class MapInitializer extends Action {
         Coordinates coordinates = new Coordinates(randomX, randomY);
         entity.setCoordinates(coordinates);
     }
-
 
 }

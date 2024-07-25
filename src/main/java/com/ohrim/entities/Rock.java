@@ -1,17 +1,17 @@
 package com.ohrim.entities;
 
 import com.ohrim.Coordinates;
+import com.ohrim.StaticObject;
 import com.ohrim.constants.EmojiConstants;
 
-public class Rock extends Entity{
+public class Rock extends StaticObject {
 
     public Rock(Coordinates coordinates) {
         this.coordinates = coordinates;
-
     }
 
     public Rock() {
-        this.coordinates = new Coordinates();
+        coordinates = new Coordinates();
     }
 
     @Override

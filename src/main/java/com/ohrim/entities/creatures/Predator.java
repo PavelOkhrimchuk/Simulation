@@ -13,8 +13,7 @@ import static com.ohrim.AppRunner.simulation;
 public class Predator extends Creature {
 
     int attack = 2;
-
-    private BreadthFirstSearch breadthFirstSearch;
+    BreadthFirstSearch breadthFirstSearch;
 
     @Override
     public void makeMove() {

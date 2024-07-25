@@ -16,8 +16,7 @@ import static com.ohrim.AppRunner.simulation;
 @Getter
 @Setter
 public class Herbivore extends Creature {
-    private BreadthFirstSearch search;
-
+    private BreadthFirstSearch breadthFirstSearch;
 
     public static void consumeGrass (List<Coordinates> pathToGrass) {
         Coordinates grassCoordinates = pathToGrass.get(0);
@@ -29,8 +28,8 @@ public class Herbivore extends Creature {
 
     @Override
     public void makeMove() {
-        search = new BreadthFirstSearch();
-        List<Coordinates> pathToGrass = search.findClosestObjectCoordinates(this.getCoordinates(), new Grass());
+        breadthFirstSearch = new BreadthFirstSearch();
+        List<Coordinates> pathToGrass = breadthFirstSearch.findClosestObjectCoordinates(this.getCoordinates(), new Grass());
 
         if(pathToGrass.size() == 1) {
             consumeGrass(pathToGrass);
@@ -60,4 +59,6 @@ public class Herbivore extends Creature {
     public String toString() {
         return EmojiConstants.HERBIVORE;
     }
+
+
 }
