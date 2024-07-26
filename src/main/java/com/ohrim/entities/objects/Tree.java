@@ -1,7 +1,6 @@
-package com.ohrim.entities;
+package com.ohrim.entities.objects;
 
 import com.ohrim.Coordinates;
-import com.ohrim.StaticObject;
 import com.ohrim.constants.EmojiConstants;
 
 public class Tree extends StaticObject {

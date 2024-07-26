@@ -1,4 +1,4 @@
-package com.ohrim;
+package com.ohrim.entities.objects;
 
 import com.ohrim.entities.Entity;
 
