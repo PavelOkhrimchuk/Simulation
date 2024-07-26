@@ -21,7 +21,7 @@ public class Map {
     }
 
     public Map() {
-        this(15, 15);
+        this(10, 10);
     }
 
     public void placeEntity(Entity entity, Coordinates coordinates) {
