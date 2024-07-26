@@ -13,12 +13,18 @@ public class Simulation {
 
 
 
+
+
     private final Renderer renderer = new Renderer();
-    private final MapInitializer mapInitializer = new MapInitializer();
+    private final MapInitializer mapInitializer;
     private final MoveAction moveAction = new MoveAction();
 
     private Map map;
     private boolean isGameStopped = false;
+
+    public Simulation() {
+        this.mapInitializer = new MapInitializer(this);
+    }
 
     public void nextTurn() {
         moveAction.executeCreatureMoves(map);

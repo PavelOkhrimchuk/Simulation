@@ -2,6 +2,7 @@ package com.ohrim.actions;
 
 import com.ohrim.Coordinates;
 import com.ohrim.Map;
+import com.ohrim.Simulation;
 import com.ohrim.entities.*;
 import com.ohrim.entities.creatures.Herbivore;
 import com.ohrim.entities.creatures.Predator;
@@ -10,6 +11,12 @@ import java.util.HashMap;
 import java.util.Random;
 
 public class MapInitializer extends Action {
+
+    private Simulation simulation;
+
+    public MapInitializer(Simulation simulation) {
+        this.simulation = simulation;
+    }
 
     private Map map;
 
@@ -26,9 +33,9 @@ public class MapInitializer extends Action {
                 if (i == 0) {
                     entity = new Grass();
                 } else if (i == 1) {
-                    entity = new Herbivore();
+                    entity = new Herbivore(simulation);
                 } else if (i == 2) {
-                    entity = new Predator();
+                    entity = new Predator(simulation);
                 } else if (i == 3) {
                     entity = new Tree();
                 } else if (i == 4) {

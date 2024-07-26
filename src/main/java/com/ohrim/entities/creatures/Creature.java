@@ -2,23 +2,28 @@ package com.ohrim.entities.creatures;
 
 import com.ohrim.BreadthFirstSearch;
 import com.ohrim.Coordinates;
+import com.ohrim.Simulation;
 import com.ohrim.entities.Entity;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
 
-import static com.ohrim.AppRunner.simulation;
-
 @Getter
 @Setter
 public abstract class Creature extends Entity {
     protected BreadthFirstSearch breadthFirstSearch;
+    protected Simulation simulation;
 
     int hp = 5;
     int speed = 1;
+
+    public Creature(Simulation simulation) {
+        this.simulation = simulation;
+    }
+
     public void makeMove() {
-        breadthFirstSearch = new BreadthFirstSearch();
+        breadthFirstSearch = new BreadthFirstSearch(simulation);
         List<Coordinates> pathToTarget = breadthFirstSearch.findClosestObjectCoordinates(this.getCoordinates(), findTarget());
 
         if (pathToTarget.size() == 1) {

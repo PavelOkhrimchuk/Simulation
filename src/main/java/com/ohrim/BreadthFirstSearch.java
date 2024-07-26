@@ -6,12 +6,18 @@ import java.util.*;
 
 public class BreadthFirstSearch {
 
-    private final Simulation simulation = AppRunner.simulation;
+
+
+    private final Simulation simulation;
     private final List<Coordinates> queuedCoordinates = new ArrayList<>();
     private final List<Coordinates> exploredCoordinates = new ArrayList<>();
     private final HashMap<Coordinates, Coordinates> childParentMap = new HashMap<>();
     private Map map;
     private Entity targetEntity;
+
+    public BreadthFirstSearch(Simulation simulation) {
+        this.simulation = simulation;
+    }
 
     public List<Coordinates> findClosestObjectCoordinates(Coordinates currentCoordinates, Entity targetEntity) {
         this.map = simulation.getMap();
@@ -84,5 +90,7 @@ public class BreadthFirstSearch {
         Collections.reverse(path);
         return path;
     }
+
+
 }
 

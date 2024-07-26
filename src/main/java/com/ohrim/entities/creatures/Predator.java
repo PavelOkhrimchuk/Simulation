@@ -1,17 +1,21 @@
 package com.ohrim.entities.creatures;
 
 import com.ohrim.Coordinates;
+import com.ohrim.Simulation;
 import com.ohrim.constants.EmojiConstants;
 import com.ohrim.entities.Entity;
-
-import static com.ohrim.AppRunner.simulation;
 
 public class Predator extends Creature {
 
     int attack = 5;
+
+    public Predator(Simulation simulation) {
+        super(simulation);
+    }
+
     @Override
     protected Entity findTarget() {
-        return new Herbivore();
+        return new Herbivore(simulation);
     }
 
     @Override
