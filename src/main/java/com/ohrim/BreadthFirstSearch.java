@@ -1,13 +1,11 @@
 package com.ohrim;
 
 import com.ohrim.entities.Entity;
+import com.ohrim.entities.objects.StaticObject;
 
 import java.util.*;
 
 public class BreadthFirstSearch {
-
-
-
     private final Simulation simulation;
     private final List<Coordinates> queuedCoordinates = new ArrayList<>();
     private final List<Coordinates> exploredCoordinates = new ArrayList<>();
@@ -90,6 +88,7 @@ public class BreadthFirstSearch {
         Collections.reverse(path);
         return path;
     }
+
 
 
 }

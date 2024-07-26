@@ -6,6 +6,8 @@ import com.ohrim.Simulation;
 import com.ohrim.entities.*;
 import com.ohrim.entities.creatures.Herbivore;
 import com.ohrim.entities.creatures.Predator;
+import com.ohrim.entities.objects.Rock;
+import com.ohrim.entities.objects.Tree;
 
 import java.util.HashMap;
 import java.util.Random;
