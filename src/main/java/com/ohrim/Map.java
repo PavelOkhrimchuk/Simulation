@@ -8,6 +8,7 @@ import java.util.HashMap;
 
 @Getter
 @Setter
+
 public class Map {
     private int width;
     private int height;
